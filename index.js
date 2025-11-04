@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
-import { CohereClient } from "cohere-ai";
+import { CohereClientV2 } from "cohere-ai";
 
 // --- 設定 ---
 const app = express();
@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
 // Cohere APIキー（Renderの環境変数で設定する）
-const cohere = new CohereClient({
+const cohere = new CohereClientV2({
   token: process.env.COHERE_API_KEY,
 });
 
