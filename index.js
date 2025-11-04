@@ -107,13 +107,24 @@ ${RULES}
 回答:
         `;
 
-        // Cohereに問い合わせ（シンプルなchat/generate呼び出し）
-        const response = await cohere.chat({
-          model: "command-r",
-          messages: prompt,
-        });
+        // --- Cohereに問い合わせ（完全対応版） ---
+const response = await cohere.chat({
+  model: "command-r",
+  messages: [
+    {
+      role: "user",
+      content: [
+        { type: "text", text: prompt }
+      ],
+    },
+  ],
+});
 
-        const replyText = (response && response.text) ? response.text.trim() : "すみません、よく分かりませんでした。";
+const replyText =
+  response?.message?.content?.[0]?.text ||
+  response?.text ||
+  "すみません、よく分かりませんでした。";
+
 
         // LINEに返信
         await axios.post(
