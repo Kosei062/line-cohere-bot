@@ -33,29 +33,25 @@ app.post("/webhook", async (req, res) => {
 
         console.log(`📩 User message: ${userMessage}`);
 
-        // --- Cohereに問い合わせ ---
-        const response = await cohere.chat({
+        // --- LINE Webhook内の処理の中で ---
+const response = await cohere.chat({
   model: "command-a-03-2025",
   messages: [
     {
       role: "system",
-      content: [
-        {
-          type: "text",
-          text: "あなたは整形外科の医療機器販売代理店スタッフを支援するアシスタントです。以下の病院業務ルールに基づいて、質問に正確に日本語で答えてください。",
-        },
-        {
-          type: "text",
-          text: hospitalRules,
-        },
-      ],
+      content: `あなたは整形外科の販売代理店スタッフです。
+      以下は病院での業務ルールです。この内容を最優先で参照して回答してください。
+      ---
+      ${hospitalRules}
+      ---`
     },
     {
       role: "user",
-      content: [{ type: "text", text: userMessage }],
-    },
+      content: userMessage
+    }
   ],
 });
+
 
 
         // --- 応答テキストの抽出 ---
