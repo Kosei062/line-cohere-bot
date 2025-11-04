@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
+import { hospitalRules } from "./rules.js";
 import { CohereClientV2 } from "cohere-ai";
 
 const app = express();
@@ -34,14 +35,28 @@ app.post("/webhook", async (req, res) => {
 
         // --- Cohereに問い合わせ ---
         const response = await cohere.chat({
-          model: "command-a-03-2025", // ✅ 最新モデル名
-          messages: [
-            {
-              role: "user",
-              content: [{ type: "text", text: userMessage }],
-            },
-          ],
-        });
+  model: "command-a-03-2025",
+  messages: [
+    {
+      role: "system",
+      content: [
+        {
+          type: "text",
+          text: "あなたは整形外科の医療機器販売代理店スタッフを支援するアシスタントです。以下の病院業務ルールに基づいて、質問に正確に日本語で答えてください。",
+        },
+        {
+          type: "text",
+          text: hospitalRules,
+        },
+      ],
+    },
+    {
+      role: "user",
+      content: [{ type: "text", text: userMessage }],
+    },
+  ],
+});
+
 
         // --- 応答テキストの抽出 ---
         const replyText =
