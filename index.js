@@ -34,7 +34,7 @@ app.post("/webhook", async (req, res) => {
 
         // --- Cohereに問い合わせ ---
         const response = await cohere.chat({
-          model: "command-r-plus", // ✅ 最新モデル名
+          model: "command-a-03-2025", // ✅ 最新モデル名
           messages: [
             {
               role: "user",
