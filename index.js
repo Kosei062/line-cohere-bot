@@ -110,7 +110,7 @@ ${RULES}
         // Cohereに問い合わせ（シンプルなchat/generate呼び出し）
         const response = await cohere.chat({
           model: "command-r",
-          message: prompt,
+          messages: prompt,
         });
 
         const replyText = (response && response.text) ? response.text.trim() : "すみません、よく分かりませんでした。";
