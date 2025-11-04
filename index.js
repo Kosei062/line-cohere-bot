@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
-import { CohereClient } from "cohere";
+import { CohereClient } from "cohere-ai";
 
 // --- 設定 ---
 const app = express();
